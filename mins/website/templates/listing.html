@@ -40,20 +40,21 @@
     </div>
     <div class="ui inverted segment container nav">
         <div class="ui  three borderless  item  menu">
-            <a class="active item" href="#list/all">
-                        All
-                    </a>
+            <a class="item" >
+                All
+            </a>
             <a class="item">
-                        New
-                    </a>
-
-
-            <a class="item" href="#list/editors">
-                        Editor's
-                    </a>
-
-
-
+                New
+            </a>
+            {% if 'editors' in request.path %}
+                <a class="active item" href="{% url 'list' %}editors">
+                Editor's
+            </a>
+            {% else %}
+                <a class="item" href="{% url 'list' %}editors">
+                Editor's
+            </a>
+            {% endif %}
         </div>
     </div>
 
@@ -61,15 +62,19 @@
     <div class="ui basic segment container content">
 
         <div class="ui three column grid">
-            {% for article in article_list %}
+            {% for article in vids_list %}
             <div class="column">
-                <a class="ui fluid card" href="{% url 'detail' article.id %}">
+                <a class="ui fluid card" href="{% url 'list' %}">
                     <div class="image">
-                        <img src="{{ article.img }}" alt="" style="height:200px;object-fit: cover;">
+                        {% if article.cover %}
+                            <img src="/upload/{{ article.cover }}" alt="" style="height:200px;object-fit: cover;">
+                        {% else %}
+                            <img src="{{ article.url_image }}" alt="" style="height:200px;object-fit: cover;">
+                        {% endif %}
                     </div>
                 </a>
 
-                <div class="title header" href="{% url 'detail' article.id %}">{{ article.title }}</div>
+                <div class="title header" href="{% url 'list' %}">{{ article.title }}</div>
 
                 <i class="icon grey unhide"></i>
                 <span style="color:#bbbbbb">{{ article.views }}</span>
@@ -86,13 +91,26 @@
 
     <div class="ui center aligned very padded vertical segment container">
         <div class="ui pagination menu">
-            <a href="#" class="item">
-                <i class="icon red left arrow"></i>
-            </a>
+            {% if vids_list.has_previous %}
+                <a href="?page={{ vids_list.previous_page_number }}" class="item">
+                    <i class="icon red left arrow"></i>
+                </a>
+            {% else %}
+                <a href="?page={{ vids_list.start_index }}" class="disabled item">
+                    <i class="icon left arrow"></i>
+                </a>
+            {% endif %}
 
-            <a href="#" class="item">
-                <i class="icon red right arrow"></i>
-            </a>
+            {% if vids_list.has_next %}
+                <a href="?page={{ vids_list.next_page_number }}" class="item">
+                    <i class="icon red right arrow"></i>
+                </a>
+            {% else %}
+                <a href="?page={{ vids_list.end_index }}" class="disabled item">
+                    <i class="icon right arrow"></i>
+                </a>
+            {% endif %}
+
         </div>
     </div>
 </body>

@@ -1,4 +1,5 @@
 from django.db import models
+from faker import  Factory
 
 # Create your models here.
 class Video(models.Model):
@@ -10,3 +11,13 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
+
+# f = open('/Users/Hou/Desktop/web_url.txt','r')
+# for url in f.readlines():
+#     v = Video(
+#         title=fake.text(max_nb_chars=90),
+#         content=fake.text(max_nb_chars=3000),
+#         url_image=url,
+#         editors_choice=fake.pybool()
+#     )
+#     v.save()
