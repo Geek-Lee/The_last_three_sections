@@ -21,21 +21,31 @@
         </div>
 
         <div class="right menu">
-            <div class="item">
-                <h5 class="ui inverted header">
-                        <div class="ui avatar image">
-                            <img src="{% static 'images/default.png' %}" alt="">
+            {% if request.user.is_authenticated %}
+                <div class="item">
+                    <h5 class="ui inverted header">
+                        <span style="margin-right:20px;">{{ request.user.username }}</span>
+                        <div class="ui mini circular image">
+                            <img src="http://semantic-ui.com/images/avatar/small/matt.jpg" alt="" />
                         </div>
-
-                        <span>admin</span>
-
                     </h5>
-            </div>
-            <div class="item">
-
-                <a href="#logout/" class="ui inverted circular button">Logout</a>
-
-            </div>
+                </div>
+                <div class="item">
+                    <a href="#" class="ui inverted circular button">Logout</a>
+                </div>
+            {% else %}
+                <div class="item">
+                    <h5 class="ui inverted header">
+                    <span style="margin-right:20px">{{ request.user.username }}</span>
+                    <div class="ui mini circular image">
+                        <img src="http://semantic-ui.com/images/avatar/small/matt.jpg" alt="" />
+                    </div>
+                </h5>
+                </div>
+                <div class="item">
+                    <a href="#" class="ui inverted circular button">Signup/Login</a>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="ui inverted segment container nav">

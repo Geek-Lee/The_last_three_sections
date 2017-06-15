@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from website.views import listing
+from website.views import listing, index_login
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^list/$', listing, name='list'),
     url(r'^list/(?P<cate>[A-Za-z]+)$', listing, name='list'),
+    url(r'^login/$', index_login, name='login'),
 ]
 
 if settings.DEBUG:
