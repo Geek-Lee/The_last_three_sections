@@ -46,7 +46,12 @@
         </div>
         <div class="eleven wide column">
             <h4 class="ui inverted right aligned header">
-                <a href="#" style="color:#ff695e;">or LOGIN</a>
+                {% if 'register' in request.path %}
+                    <a href="{% url 'login' %}" style="color:#ff695e;">or LOGIN</a>
+                {% endif %}
+                {% if 'login' in request.path %}
+                    <a href="{% url 'register' %}" style="color:#ff695e;">or REGISTER</a>
+                {% endif %}
             </h4>
             <form class="ui form error" method="post">
                 {% if form.errors %}

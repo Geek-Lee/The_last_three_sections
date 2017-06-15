@@ -15,15 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from website.views import listing, index_login
+from website.views import listing, index_login, index_register
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import logout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^list/$', listing, name='list'),
     url(r'^list/(?P<cate>[A-Za-z]+)$', listing, name='list'),
     url(r'^login/$', index_login, name='login'),
+    url(r'^register/$', index_register, name='register'),
+    url(r'^logout/$', logout, {'next_page':'/register'},name='logout'),
 ]
 
 if settings.DEBUG:

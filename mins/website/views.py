@@ -3,6 +3,7 @@ from website.models import Video
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login
 from website.form import LoginForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
 def listing(request, cate=None):
@@ -28,17 +29,23 @@ def listing(request, cate=None):
 def index_login(request):
     context = {}
     if request.method == "GET":
-        form = LoginForm
+        form = AuthenticationForm
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user:
-                login(request, user)
-                return redirect(to='list')
-            else:
-                return HttpResponse('<h1>Not A USER!</h1>')
+            login(request, form.get_user())
+            return redirect(to='list')
+    context['form'] = form
+    return render(request, 'register_login.html', context)
+
+def index_register(request):
+    context = {}
+    if request.method == 'GET':
+        form = UserCreationForm
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='login')
     context['form'] = form
     return render(request, 'register_login.html', context)

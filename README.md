@@ -13,3 +13,10 @@
 
 实现用户注册与登录、登出（二）
 在后台添加用户资料的模型，在前端页面添加用户判断的条件
+
+实现用户注册与登录、登出（三）
+注册（产生用户）和登录（认证用户）
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+V.定义登录和注册函数
+U.给登录，注册，登出各定义一个url
+T.插入登出，登录，注册url
