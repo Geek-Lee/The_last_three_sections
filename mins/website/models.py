@@ -1,5 +1,6 @@
 from django.db import models
 from faker import  Factory
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Video(models.Model):
@@ -11,6 +12,10 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
+
+class UserProfile(models.Model):
+    belong_to = models.OneToOneField(to=User, related_name='profile')
+    profile_image = models.FileField(upload_to='profile_image')
 
 # f = open('/Users/Hou/Desktop/web_url.txt','r')
 # for url in f.readlines():
