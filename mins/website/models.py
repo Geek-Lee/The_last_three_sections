@@ -17,6 +17,18 @@ class UserProfile(models.Model):
     belong_to = models.OneToOneField(to=User, related_name='profile')
     profile_image = models.FileField(upload_to='profile_image')
 
+class Ticket(models.Model):
+    voter = models.ForeignKey(to=UserProfile, related_name='voted_tickets')
+    video = models.ForeignKey(to=Video, related_name='tickets')
+    VOTE_CHOICES = {
+        ('like', 'like'),
+        ('dislike', 'dislike'),
+        ('normal', 'normal'),
+    }
+    choice = models.CharField(choices=VOTE_CHOICES, max_length=10)
+    def __str__(self):
+        return str(self.id)
+
 # f = open('/Users/Hou/Desktop/web_url.txt','r')
 # for url in f.readlines():
 #     v = Video(

@@ -1,9 +1,10 @@
 from django.shortcuts import render, Http404, HttpResponse, redirect
-from website.models import Video
+from website.models import Video, Ticket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login
 from website.form import LoginForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def listing(request, cate=None):
@@ -53,5 +54,26 @@ def index_register(request):
 def detail(request, id):
     context = {}
     vid_info = Video.objects.get(id=id)
+    try:
+        voter_id = request.user.profile.id
+        user_ticket_for_this_video = Ticket.objects.get(voter_id=voter_id, video_id=id)
+        like_counts = Ticket.objects.filter(choice='like', video_id=id).count()
+        context['user_ticket'] = user_ticket_for_this_video
+        context['like_counts'] = like_counts
+    except:
+        pass
     context['vid_info'] = vid_info
     return render(request, 'detail.html', context)
+
+def detail_vote(request, id):
+    voter_id = request.user.profile.id
+
+    try:
+        user_ticket_for_this_video = Ticket.objects.get(voter_id=voter_id, video_id=id)
+        user_ticket_for_this_video.choice = request.POST['vote']
+        user_ticket_for_this_video.save()
+    except ObjectDoesNotExist:
+        new_ticket = Ticket(voter_id=voter_id, video_id=id, choice=request.POST['vote'])
+        new_ticket.save()
+
+    return redirect(to='detail', id=id)

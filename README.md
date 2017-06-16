@@ -1,4 +1,4 @@
-# 最后三部分知识
+﻿# 最后三部分知识
 --init--
 
 用Django分页器实现分页跳转
@@ -20,3 +20,16 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 V.定义登录和注册函数
 U.给登录，注册，登出各定义一个url
 T.插入登出，登录，注册url
+
+实现投票功能
+M投票的数据结构设计<br>
+在adminpy上注册模型<br>
+MM<br>
+V<br>
+1.按钮显示逻辑<br>
+2.喜欢人数统计逻辑<br>
+U注册url<br>
+T<br>
+1.按钮显示界面<br>
+2.数量统计在前端的显示<br>
+3.全部代码<br>

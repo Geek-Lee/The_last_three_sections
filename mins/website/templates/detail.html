@@ -3,16 +3,16 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="{% static  'css/list_custom.css' %}" media="screen" title="no title" charset="utf-8">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static  'css/list_custom.css' %}" media="screen" title="no title" charset="utf-8">
 
-</head>
+    </head>
 
-<body>
+    <body>
     <div class="ui inverted top fixed menu borderless red menu">
         <div class="header item">
             <div class="ui image">
@@ -59,27 +59,64 @@
             <span style="color:#bbbbbb">111</span>
             <span class="" style="color:rgb(226, 226, 226)">|</span>
             <i class="icon grey checkmark"></i>
-            <span style="color:#bbbbbb">111 people got it</span>
+            {% if like_counts %}
+                <span style="color:#bbbbbb">{{ like_counts }} people got it</span>
+            {% else %}
+                <span style="color:#bbbbbb">{{ like_counts }} people got it</span>
+            {% endif %}
 
             <p>
                 {{ vid_info.content }}
             </p>
             <div class="ui divider"></div>
-            <form class="ui form" action="#" method="post">
-                <button class="ui  tiny button" type="submit" name="vote" value="like" >
-                    <i class="icon checkmark"></i>
-                    Get it!
-                </button>
+            <form class="ui form" action="{% url 'vote' vid_info.id %}" method="post">
+                    {% csrf_token %}
 
-                <button class="ui  tiny button" type="submit" name="vote" value="dislike" >
-                    <i class="icon bomb"></i>
-                    Hmmm...
-                </button>
+                        {% if user_ticket.choice == 'like'  %}
+                            <button class="ui red tiny button" type="submit" name="vote" value="normal" >
+                                <i class="icon checkmark"></i>
+                                Get it!
+                            </button>
 
-                <button class="ui secondary circular tiny right floated pin icon button">
-                    <i class="pin icon"></i>
-                    Saved
-                </button>
-            </form>
+                            <button class="ui  tiny button" type="submit" name="vote" value="dislike" >
+                                <i class="icon bomb"></i>
+                                Hmmm...
+                            </button>
+
+                        {% elif user_ticket.choice == 'dislike' %}
+
+                            <button class="ui tiny button" type="submit" name="vote" value="like" >
+                                <i class="icon checkmark"></i>
+                                Get it!
+                            </button>
+
+                            <button class="ui red tiny button" type="submit" name="vote" value="normal" >
+                                <i class="icon bomb"></i>
+                                Hmmm...
+                            </button>
+
+                        {% else %}
+                            <button class="ui  tiny button" type="submit" name="vote" value="like" >
+                                <i class="icon checkmark"></i>
+                                Get it!
+                            </button>
+
+                            <button class="ui  tiny button" type="submit" name="vote" value="dislike" >
+                                <i class="icon bomb"></i>
+                                Hmmm...
+                            </button>
+
+                        {% endif %}
+
+
+
+                        <button class="ui secondary circular tiny right floated pin icon button">
+                            <i class="pin icon"></i>
+                            Saved
+                        </button>
+
+
+                </form>
         </div>
 </body>
+</html>

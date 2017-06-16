@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from website.views import listing, index_login, index_register, detail
+from website.views import listing, index_login, index_register, detail, detail_vote
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import logout
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^register/$', index_register, name='register'),
     url(r'^logout/$', logout, {'next_page':'/register'},name='logout'),
     url(r'^detail/(?P<id>\d+)/$', detail, name="detail"),
+    url(r'^detail/vote/(?P<id>\d+)$', detail_vote, name='vote'),
 ]
 
 if settings.DEBUG:
