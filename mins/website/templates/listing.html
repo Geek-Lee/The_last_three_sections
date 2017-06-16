@@ -47,7 +47,7 @@
                 </h5>
                 </div>
                 <div class="item">
-                    <a href="#" class="ui inverted circular button">Signup/Login</a>
+                    <a href="{% url 'login' %}" class="ui inverted circular button">Signup/Login</a>
                 </div>
             {% endif %}
         </div>
@@ -76,27 +76,27 @@
     <div class="ui basic segment container content">
 
         <div class="ui three column grid">
-            {% for article in vids_list %}
+            {% for video in vids_list %}
             <div class="column">
-                <a class="ui fluid card" href="{% url 'list' %}">
+                <a class="ui fluid card" href="{% url 'detail' video.id %}">
                     <div class="image">
-                        {% if article.cover %}
-                            <img src="/upload/{{ article.cover }}" alt="" style="height:200px;object-fit: cover;">
+                        {% if video.cover %}
+                            <img src="/upload/{{ video.cover }}" alt="" style="height:200px;object-fit: cover;">
                         {% else %}
-                            <img src="{{ article.url_image }}" alt="" style="height:200px;object-fit: cover;">
+                            <img src="{{ video.url_image }}" alt="" style="height:200px;object-fit: cover;">
                         {% endif %}
                     </div>
                 </a>
 
-                <div class="title header" href="{% url 'list' %}">{{ article.title }}</div>
+                <div class="title header" href="{% url 'detail' video.id %}">{{ video.title }}</div>
 
                 <i class="icon grey unhide"></i>
-                <span style="color:#bbbbbb">{{ article.views }}</span>
+                <span style="color:#bbbbbb">{{ video.views }}</span>
 
                 <span class="" style="color:rgb(226, 226, 226)">|</span>
 
                 <i class="icon grey checkmark"></i>
-                <span style="color:#bbbbbb"> {{ article.favs }} people got it</span>
+                <span style="color:#bbbbbb"> {{ video.favs }} people got it</span>
 
             </div>
             {% endfor %}

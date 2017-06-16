@@ -49,3 +49,9 @@ def index_register(request):
             return redirect(to='login')
     context['form'] = form
     return render(request, 'register_login.html', context)
+
+def detail(request, id):
+    context = {}
+    vid_info = Video.objects.get(id=id)
+    context['vid_info'] = vid_info
+    return render(request, 'detail.html', context)
